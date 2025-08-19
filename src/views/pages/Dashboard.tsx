@@ -60,8 +60,8 @@ export default function Dashboard() {
       totalProjects === 0
         ? 0
         : Math.round(
-            projects.reduce((sum, p) => sum + (Number(p.progress) || 0), 0) / totalProjects
-          )
+          projects.reduce((sum, p) => sum + (Number(p.progress) || 0), 0) / totalProjects
+        )
 
     return { totalProjects, activeProjects, completedProjects, delayedProjects, teamMembers, avgProgress }
   }, [projects])
@@ -131,66 +131,67 @@ export default function Dashboard() {
     setDialogMode('copy')
   }
 
- const handleSaveProject = async (project: Project) => {
-  try {
-    const dataToSave = {
-      name: project.name,
-      description: project.description,
-      status: project.status,
-      progress: project.progress,
-      startDate: project.startDate,
-      endDate: project.endDate,
-      teamSize: project.teamSize,
-      budget: project.budget,
-      manager: project.manager,
-      category: project.category || "",
-      location: project.location || "",
-      phases: project.phases || [],
-      tasks: project.tasks || [],
-      createdAt: project.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      investmentLevel: project.investmentLevel || "",
-      investmentApproval: project.investmentApproval || "",
-      projectGroup: project.projectGroup || "",
-      investor: project.investor || "",
-      investmentType: project.investmentType || "",
-      managementType: project.managementType || "",
-      projectScale: project.projectScale || "",
-      designStepCount: project.designStepCount || 1,
-      designCapacity: project.designCapacity || "",
-      approvalDate: project.approvalDate || "",
-      legalDocuments: project.legalDocuments || [],
-      constructionLevel: project.constructionLevel || "",
-      constructionType: project.constructionType || "",
-      constructionLocation: project.constructionLocation || "",
-      designStandards: project.designStandards || "",
-      goals: project.goals || "",
-      method: project.syntheticMethod || "",
-      notes: project.notes || "",
-      numberTBMT: project.numberTBMT || "",
-      timeExceution: project.timeExceution || "",
-      contractorCompanyName: project.contractorCompanyName || [],
-      contrator: project.contrator || "",
-      contractorPrice: project.contractorPrice || 0,
-      relatedDocuments: project.relatedDocuments || [],
-      roleExecutor: project.roleExecutor || "",
-      capitalProject: project.capitalProject || "",
-      field: project.field || ""
-    }
+  const handleSaveProject = async (project: Project) => {
+    try {
+      const dataToSave = {
+        name: project.name,
+        description: project.description,
+        status: project.status,
+        progress: project.progress,
+        startDate: project.startDate,
+        endDate: project.endDate,
+        teamSize: project.teamSize,
+        budget: project.budget,
+        manager: project.manager,
+        category: project.category || "",
+        location: project.location || "",
+        phases: project.phases || [],
+        tasks: project.tasks || [],
+        createdAt: project.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        investmentLevel: project.investmentLevel || "",
+        investmentApproval: project.investmentApproval || "",
+        projectGroup: project.projectGroup || "",
+        investor: project.investor || "",
+        investmentType: project.investmentType || "",
+        managementType: project.managementType || "",
+        projectScale: project.projectScale || "",
+        designStepCount: project.designStepCount || 1,
+        designCapacity: project.designCapacity || "",
+        approvalDate: project.approvalDate || "",
+        legalDocuments: project.legalDocuments || [],
+        constructionLevel: project.constructionLevel || "",
+        constructionType: project.constructionType || "",
+        constructionLocation: project.constructionLocation || "",
+        designStandards: project.designStandards || "",
+        goals: project.goals || "",
+        method: project.syntheticMethod || "",
+        notes: project.notes || "",
+        numberTBMT: project.numberTBMT || "",
+        timeExceution: project.timeExceution || "",
+        contractorCompanyName: project.contractorCompanyName || [],
+        contrator: project.contrator || "",
+        contractorPrice: project.contractorPrice || 0,
+        relatedDocuments: project.relatedDocuments || [],
+        roleExecutor: project.roleExecutor || "",
+        capitalProject: project.capitalProject || "",
+        field: project.field || "",
+        documentFolder: project.documentFolder || []
+      }
 
-    if (dialogMode === "create" || dialogMode === "copy") {
-      await addProject(dataToSave)
-    } else if (dialogMode === "edit" && project.id) {
-      await updateProject(project.id, dataToSave)
-    }
+      if (dialogMode === "create" || dialogMode === "copy") {
+        await addProject(dataToSave)
+      } else if (dialogMode === "edit" && project.id) {
+        await updateProject(project.id, dataToSave)
+      }
 
-    await refetch() 
-    setDialogMode(null)
-    setSelectedProject(null)
-  } catch (error) {
-    console.error("Lỗi khi lưu dự án:", error)
+      await refetch()
+      setDialogMode(null)
+      setSelectedProject(null)
+    } catch (error) {
+      console.error("Lỗi khi lưu dự án:", error)
+    }
   }
-}
 
   const handleCloseDialog = () => {
     setDialogMode(null)

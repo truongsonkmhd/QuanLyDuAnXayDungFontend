@@ -1419,6 +1419,8 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
             <CardHeader>
               <CardTitle>Giai Đoạn Dự Án</CardTitle>
             </CardHeader>
+
+
             <CardContent>
               {selectedTemplate && (
                 <div className="mb-4">
@@ -1453,16 +1455,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                                 Cơ sở pháp lý: {phase.legalBasis}
                               </p>
                             )}
-                            {phase.startDate && (
-                              <p className="text-xs text-muted-foreground">
-                                Bắt đầu: {new Date(phase.startDate).toLocaleDateString()}
-                              </p>
-                            )}
-                            {phase.endDate && (
-                              <p className="text-xs text-muted-foreground">
-                                Kết thúc: {new Date(phase.endDate).toLocaleDateString()}
-                              </p>
-                            )}
+
                             <div className="space-y-1 mt-3">
                               <Label className="text-sm font-medium">Tài liệu đính kèm</Label>
                               <Input

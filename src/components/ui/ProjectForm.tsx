@@ -1,9 +1,9 @@
 // src/components/projects/ProjectForm.tsx
 import { useState, useEffect } from "react"
-import { addProject, updateProject } from "@/setup_firebase/services/projectService"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Project } from "@/types/project"
+import { addProject, updateProject } from "@/services/ProjectService"
 
 interface Props {
   project?: Project

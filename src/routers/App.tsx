@@ -11,6 +11,7 @@ import Tasks from "../views/pages/Tasks";
 import NotFound from "../views/pages/NotFound";
 import AuthScreen from "@/views/login-and-registor/AuthScreen";
 import Disbursement from "@/views/pages/Disbursement";
+import { OnlyOfficeFirebaseDemo } from "@/views/pages/OnlyOfficeFirebaseDemo";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/tasks" element={<Tasks />} />        
-          <Route path="/timeline" element={<div>Trang Tiến Độ (Sắp Ra Mắt)</div>} />
+          <Route path="/timeline" element={<OnlyOfficeFirebaseDemo />} />
           <Route path="/disbursement" element={<Disbursement/>} />
           <Route path="/documents" element={<div>Trang Tài Liệu (Sắp Ra Mắt)</div>} />
           <Route path="/team" element={<div>Trang Nhóm (Sắp Ra Mắt)</div>} />
