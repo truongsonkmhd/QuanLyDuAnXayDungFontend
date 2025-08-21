@@ -37,16 +37,16 @@ import {
 import { Project } from "@/types/project"
 import { ProjectDetail } from "@/views/projects/ProjectDetail"
 import { ProjectForm } from "@/views/projects/ProjectForm"
-import { useProjects } from "@/hooks/useProjects"
+import { useProjects } from "@/hooks/project/useProjects"
 
 import { addProject, updateProject, deleteProject } from "@/services/ProjectService"
 
 const statusConfig = {
   planning: { label: "Lập Kế Hoạch", className: "bg-status-planning text-white", icon: CalendarDays },
-  active:   { label: "Đang Hoạt Động", className: "bg-status-active text-white", icon: CheckCircle },
-  on_hold:  { label: "Tạm Dừng", className: "bg-status-delayed text-white", icon: AlertTriangle },
-  completed:{ label: "Hoàn Thành", className: "bg-status-completed text-white", icon: CheckCircle },
-  cancelled:{ label: "Đã Hủy", className: "bg-status-blocked text-white", icon: AlertTriangle },
+  active: { label: "Đang Hoạt Động", className: "bg-status-active text-white", icon: CheckCircle },
+  on_hold: { label: "Tạm Dừng", className: "bg-status-delayed text-white", icon: AlertTriangle },
+  completed: { label: "Hoàn Thành", className: "bg-status-completed text-white", icon: CheckCircle },
+  cancelled: { label: "Đã Hủy", className: "bg-status-blocked text-white", icon: AlertTriangle },
 } as const
 
 function ProjectCard({
@@ -150,9 +150,9 @@ export default function Projects() {
   })
 
   const handleCreateProject = () => { setSelectedProject(null); setDialogMode('create') }
-  const handleViewProject   = (p: Project) => { setSelectedProject(p); setDialogMode('view') }
-  const handleEditProject   = (p: Project) => { setSelectedProject(p); setDialogMode('edit') }
-  const handleCopyProject   = (p: Project) => { setSelectedProject(p); setDialogMode('copy') }
+  const handleViewProject = (p: Project) => { setSelectedProject(p); setDialogMode('view') }
+  const handleEditProject = (p: Project) => { setSelectedProject(p); setDialogMode('edit') }
+  const handleCopyProject = (p: Project) => { setSelectedProject(p); setDialogMode('copy') }
 
   //  Xoá qua service + refetch
   const handleDeleteProject = async (project: Project) => {

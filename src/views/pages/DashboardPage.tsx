@@ -27,7 +27,7 @@ import {
 import { Project } from "@/types/project"
 import { ProjectDetail } from "@/views/projects/ProjectDetail"
 import { ProjectForm } from "@/views/projects/ProjectForm"
-import { useProjects } from "@/hooks/useProjects"
+import { useProjects } from "@/hooks/project/useProjects"
 import {
   addProject,
   updateProject,
@@ -67,50 +67,6 @@ export default function Dashboard() {
   }, [projects])
 
 
-  const handleExportExcel = async () => {
-    try {
-      const XLSX = await import("xlsx")
-      const rows = projects.map(p => ({
-        "Tên dự án": p.name ?? "",
-        "Mô tả": p.description ?? "",
-        "Trạng thái": p.status ?? "",
-        "Tiến độ (%)": typeof p.progress === "number" ? p.progress : "",
-        "Ngày bắt đầu": p.startDate ? new Date(p.startDate).toLocaleDateString() : "",
-        "Ngày kết thúc": p.endDate ? new Date(p.endDate).toLocaleDateString() : "",
-        "Quản lý": p.manager ?? "",
-        "Số thành viên": p.teamSize ?? "",
-        "Ngân sách (VND)": p.budget ?? "",
-        "Nhóm dự án": p.projectGroup ?? "",
-        "Chủ đầu tư": p.investor ?? "",
-        "Nguồn vốn": p.capitalSource ?? "",
-        "Loại hình quản lý": p.managementType ?? "",
-        "Cấp công trình": p.constructionLevel ?? "",
-        "Loại công trình": p.constructionType ?? "",
-        "Địa điểm xây dựng": p.constructionLocation ?? "",
-        "Danh mục": p.category ?? "",
-        "Vị trí": p.location ?? "",
-        "Ngày tạo": p.createdAt ? new Date(p.createdAt).toLocaleString() : "",
-        "Ngày cập nhật": p.updatedAt ? new Date(p.updatedAt).toLocaleString() : "",
-      }))
-
-      const ws = XLSX.utils.json_to_sheet(rows)
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, "Projects")
-
-
-      // auto width cột đơn giản
-      const colWidths = Object.keys(rows[0] ?? {}).map(k => ({
-        wch: Math.max(k.length, ...rows.map(r => String(r[k] ?? "").length), 12)
-      }))
-      ws["!cols"] = colWidths
-
-      const fileName = `du_an_${new Date().toISOString().slice(0, 10)}.xlsx`
-      XLSX.writeFile(wb, fileName)
-    } catch (e) {
-      console.error("Xuất Excel thất bại:", e)
-    }
-  }
-
   const handleCreateProject = () => {
     setSelectedProject(null)
     setDialogMode('create')
@@ -130,6 +86,7 @@ export default function Dashboard() {
     setSelectedProject(project)
     setDialogMode('copy')
   }
+
 
   const handleSaveProject = async (project: Project) => {
     try {
@@ -213,7 +170,7 @@ export default function Dashboard() {
           <Button
             variant="outline"
             size="lg"
-            onClick={handleExportExcel}
+            //  onClick={() => exportDashboardXlsx(projects)}
             disabled={loading || projects.length === 0}
           >
             <FileDown className="w-4 h-4 mr-2" />
@@ -247,9 +204,6 @@ export default function Dashboard() {
                       key={project.id}
                       project={project}
                       onClick={handleViewProject}
-                    // onEdit={handleEditProject}
-                    //  onCopy={handleCopyProject}
-                    // onDelete={handleDeleteProject}
                     />
                   ))}
                 </div>

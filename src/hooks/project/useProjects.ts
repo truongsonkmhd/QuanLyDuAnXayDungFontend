@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { getAllProjects } from "@/services/ProjectService"
+import { Project } from "@/types/project"
 
 export const useProjects = () => {
   const [projects, setProjects] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true)
 
   const fetchProjects = async () => {
     setLoading(true)
@@ -16,5 +17,9 @@ export const useProjects = () => {
     fetchProjects()
   }, [])
 
-  return { projects, loading, refetch: fetchProjects }
+  const getById = (id: string): Project | undefined =>
+    projects.find((p) => p.id === id)
+
+
+  return { getById, projects, isLoading, refetch: fetchProjects }
 }

@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   MoreHorizontal,
   Flag,
   Clock,
@@ -41,7 +41,7 @@ import TaskForm, { TaskInput } from "@/views/tasks/TaskForm"
 import { Work } from "@/types/work"
 
 
- // mock data cho các công việc
+// mock data cho các công việc
 const initialTasks: Work[] = [
   {
     id: "1",
@@ -151,10 +151,10 @@ const progressByStatus: Record<Work["status"], number> = {
 }
 
 const colorByStatus: Record<Work["status"], string> = {
-  todo: "#9CA3AF",        
-  in_progress: "#3B82F6", 
-  review: "#F59E0B",      
-  completed: "#10B981",  
+  todo: "#9CA3AF",
+  in_progress: "#3B82F6",
+  review: "#F59E0B",
+  completed: "#10B981",
 }
 
 function ColoredAnimatedProgress({ value, status }: { value: number; status: Work["status"] }) {
@@ -531,7 +531,7 @@ export default function Tasks() {
 
       {/* Form Edit (mở bằng 3 chấm) */}
       <TaskForm
-        onAdd={() => {}}
+        onAdd={() => { }}
         onUpdate={handleUpdateTask}
         initialData={editingTask ? { ...editingTask } : null}
         isOpen={editOpen}

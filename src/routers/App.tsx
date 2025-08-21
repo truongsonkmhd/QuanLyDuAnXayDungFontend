@@ -5,13 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AppLayout } from "@/components/layout/AppLayout";
-import Dashboard from "../views/pages/Dashboard";
-import Projects from "../views/pages/Projects";
-import Tasks from "../views/pages/Tasks";
+import Dashboard from "../views/pages/DashboardPage";
+import Projects from "../views/pages/ProjectsPage";
+import Tasks from "../views/pages/TasksPage";
 import NotFound from "../views/pages/NotFound";
 import AuthScreen from "@/views/login-and-registor/AuthScreen";
-import Disbursement from "@/views/pages/Disbursement";
-import { OnlyOfficeFirebaseDemo } from "@/views/pages/OnlyOfficeFirebaseDemo";
+import Disbursement from "@/views/pages/DisbursementPage";
 
 const queryClient = new QueryClient();
 
@@ -30,9 +29,9 @@ const App = () => (
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/tasks" element={<Tasks />} />        
-          <Route path="/timeline" element={<OnlyOfficeFirebaseDemo />} />
-          <Route path="/disbursement" element={<Disbursement/>} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/timeline" element={<div>(Sắp Ra Mắt)</div>} />
+          <Route path="/disbursement" element={<Disbursement />} />
           <Route path="/documents" element={<div>Trang Tài Liệu (Sắp Ra Mắt)</div>} />
           <Route path="/team" element={<div>Trang Nhóm (Sắp Ra Mắt)</div>} />
           <Route path="/discussions" element={<div>Trang Thảo Luận (Sắp Ra Mắt)</div>} />

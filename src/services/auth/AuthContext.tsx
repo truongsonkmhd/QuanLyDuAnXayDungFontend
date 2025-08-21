@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const forgot = (email: string) => sendPasswordResetEmail(auth, email);
 
   const signOut = () => fbSignOut(auth);
-  
+
 
   return (
     <Ctx.Provider value={{ user, loading, signIn, signUp, forgot, signOut }}>

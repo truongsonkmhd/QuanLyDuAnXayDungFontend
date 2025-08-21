@@ -1,4 +1,4 @@
-const EXTENSIONS = ['pdf','docx','jpg','png','xlsx'] as const
+const EXTENSIONS = ['pdf', 'docx', 'jpg', 'png', 'xlsx'] as const
 type FileExt = typeof EXTENSIONS[number] | 'other'
 
 export const toFileExt = (extRaw?: string): FileExt => {
@@ -48,13 +48,13 @@ export interface Project {
   tasks?: ProjectTask[]
   createdAt?: string
   updatedAt?: string
- 
+
 
   //thông tin gói thầu
   numberTBMT?: string // Số TBMT
   timeExceution?: string // Thời gian thực hiện
   contractorCompanyName?: string[] // Tên công ty trúng thầu 
-  contrator : string // Nhà thầu
+  contrator: string // Nhà thầu
   contractorPrice?: number // Giá trúng thầu
   relatedDocuments?: BaseDocument[] // Văn bản liên quan (có thể là danh sách URL
   roleExecutor?: string // Vai trò thực hiện (có thể là tên người hoặc nhóm)
@@ -67,6 +67,15 @@ export interface Project {
 
   //Tài liệu dự án
   documentFolder?: DocumentFolder[]
+
+  // Các mốc quan trọng của dự án
+  milestones?: milestone[]
+
+}
+
+export interface milestone {
+  id: string
+  milestioneName?: string
 }
 
 export interface DocumentFolder {
@@ -100,10 +109,12 @@ export interface ProjectTask {
   startDate?: string
   endDate?: string
   progress: number
+  assignUser?: string
   dependencies?: string[]
   documentsTask?: BaseDocument[]
   legalBasis?: string
 }
+
 
 export interface BaseDocument {
   id: string

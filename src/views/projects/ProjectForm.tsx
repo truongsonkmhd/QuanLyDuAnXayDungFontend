@@ -26,7 +26,7 @@ import {
   Pencil
 } from "lucide-react"
 import { Project, ProjectTemplate, ProjectPhase } from "@/types/project"
-import { useProjectTemplates } from "@/hooks/useProjectsTemplates"
+import { useProjectTemplates } from "@/hooks/project/useProjectsTemplates"
 import { buildDownloadUrl } from "@/helpers/buildDownloadUrl"
 import { CapitalProject, DesignStepsField, FieldProject, ProjectGroupField } from "@/components/ui/CreatableSelectFieldProps"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -51,6 +51,8 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
   const [editingTask, setEditingTask] = useState<ProjectTask | null>(null)
   const [editingPhase, setEditingPhase] = useState<ProjectPhase | null>(null)
   const [newCompanyName, setNewCompanyName] = useState("")
+
+  // xác định quyền admin từ custom claims
   const [newTask, setNewTask] = useState<Partial<ProjectTask>>({
     name: "",
     description: "",
@@ -58,6 +60,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
     priority: "medium",
     progress: 0,
     legalBasis: "",
+    assignUser: "",
     documentsTask: []
   })
   const [newPhase, setNewPhase] = useState<Partial<ProjectPhase>>({
@@ -114,7 +117,8 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
     roleExecutor: "",
     capitalProject: "",
     field: "",
-    documentFolder: []
+    documentFolder: [],
+    milestones: [],
   })
   const [expandedFolders, setExpandedFolders] = useState<string[]>([])
 
@@ -226,6 +230,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
       progress: newTask.progress || 0,
       legalBasis: newTask.legalBasis || "",
       documentsTask: newTask.documentsTask || [],
+      assignUser: newTask.assignUser || "",
       assignee: newTask.assignee || "",
       startDate: newTask.startDate || null,
       endDate: newTask.endDate || null,
@@ -1207,6 +1212,34 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                   required
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="taskName">
+                  Người thực hiện *
+                  <br />
+                  <span className="text-sm block text-red-400">
+                    (Chỉ quyền admin mới dùng được chức năng này,
+                    nếu quyên nhân viên thì sẽ tự gán tên vào nhiệm vụ)
+                  </span>
+                </Label>
+                <Select
+                  value={newTask.assignUser || ""}
+                  onValueChange={(v) =>
+                    setNewTask((prev) => ({ ...prev, assignUser: v, assignee: v }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="user_test_01">Phạm Trường Sơn</SelectItem>
+                    <SelectItem value="user_test_02">Phạm Văn Dương</SelectItem>
+                    <SelectItem value="user_test_03">Phạm Văn Trung</SelectItem>
+                    <SelectItem value="user_test_04">Nguyễn Văn D</SelectItem>
+                    <SelectItem value="user_test_05">Trần Thị A</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="taskDescription">Mô Tả</Label>
                 <Textarea
@@ -1344,7 +1377,6 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                   onChange={(e) => setNewPhase(prev => ({ ...prev, order: parseInt(e.target.value) }))}
                 />
               </div>
-
 
               <div className="space-y-2">
                 <Label htmlFor="phaseLegalBasis">Cơ Sở Pháp Lý</Label>

@@ -3,37 +3,37 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { CalendarDays, Users, AlertTriangle, CheckCircle } from "lucide-react"
 import { Project } from "@/types/project"
-import { formatCurrency } from '@/utils/format';
+import { formatMoney } from "@/utils/formatMoney"
 interface ProjectCardProps {
   project: Project
   onClick?: (project: Project) => void
 }
 
 const statusConfig = {
-  planning: { 
-    label: "Lập Kế Hoạch", 
+  planning: {
+    label: "Lập Kế Hoạch",
     className: "bg-status-planning text-white",
-    icon: CalendarDays 
+    icon: CalendarDays
   },
-  active: { 
-    label: "Đang Hoạt Động", 
+  active: {
+    label: "Đang Hoạt Động",
     className: "bg-status-active text-white",
-    icon: CheckCircle 
+    icon: CheckCircle
   },
-  on_hold: { 
-    label: "Tạm Dừng", 
+  on_hold: {
+    label: "Tạm Dừng",
     className: "bg-status-delayed text-white",
-    icon: AlertTriangle 
+    icon: AlertTriangle
   },
-  completed: { 
-    label: "Hoàn Thành", 
+  completed: {
+    label: "Hoàn Thành",
     className: "bg-status-completed text-white",
-    icon: CheckCircle 
+    icon: CheckCircle
   },
-  cancelled: { 
-    label: "Đã Hủy", 
+  cancelled: {
+    label: "Đã Hủy",
     className: "bg-status-blocked text-white",
-    icon: AlertTriangle 
+    icon: AlertTriangle
   },
 }
 
@@ -42,7 +42,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
   const StatusIcon = status.icon
 
   return (
-    <Card 
+    <Card
       className="hover:shadow-construction transition-shadow cursor-pointer"
       onClick={() => onClick?.(project)}
     >
@@ -57,12 +57,12 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           </Badge>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground line-clamp-2">
           {project.description}
         </p>
-        
+
         {/* Progress */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
@@ -71,7 +71,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           </div>
           <Progress value={project.progress} className="h-2" />
         </div>
-        
+
         {/* Project details */}
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
@@ -83,14 +83,14 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
             <span>{project.teamSize} thành viên</span>
           </div>
         </div>
-        
+
         {/* Budget and manager */}
         <div className="pt-2 border-t border-border">
           <div className="flex justify-between items-center text-sm">
             <span className="text-muted-foreground">Ngân Sách</span>
             <span className="font-medium text-foreground">
-                {formatCurrency(project.budget)} VNĐ
-          
+              {formatMoney(project.budget)} VNĐ
+
             </span>
           </div>
           <div className="flex justify-between items-center text-sm mt-1">

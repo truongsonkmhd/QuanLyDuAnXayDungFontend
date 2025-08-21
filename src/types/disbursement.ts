@@ -1,24 +1,26 @@
+import { milestone } from "./project";
 
 export type DisbursementItem = {
   id: string;
   description: string;
-  amount: number; 
-  taxRate: number; 
+  amount: number;
+  taxRate: number;
 };
 
 export type DisbursementRequest = {
   id: string;
   code: string;
   projectId: string;
-  contractId: string;
-  period: string; // YYYY-MM (gắn với kế hoạch)
+  projectName?: string;
+  period: string;
   items: DisbursementItem[];
   note?: string;
+  milestones?: milestone;
   advanceDeduction: number;
-  retentionRate: number; 
-  completionPct: number; 
+  completionPct: number;
   status: "DRAFT" | "SUBMITTED" | "APPROVING" | "APPROVED" | "PAYMENT_ORDERED" | "PAID" | "REJECTED" | "NEED_INFO";
   submittedAt?: string;
+  createdAt?: string;
 };
 
 export type PlanItem = {
@@ -26,10 +28,13 @@ export type PlanItem = {
   period: string; // YYYY-MM
   plannedAmount: number;
 };
-
-export type DisbursementPlan = {
+export type BaseDisbursementPlan = {
   id: string;
   projectId: string;
-  contractId: string;
   items: PlanItem[];
 };
+
+export type DisbursementPlan = BaseDisbursementPlan & {};
+
+export type DisbursementPlanOnlyProject = BaseDisbursementPlan & {};
+
