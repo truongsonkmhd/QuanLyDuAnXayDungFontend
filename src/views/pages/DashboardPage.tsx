@@ -135,33 +135,25 @@ export default function Dashboard() {
           </p>
         </div>
 
-        {/* Nhóm 2 nút: icon-only trên mobile, có chữ trên ≥ sm */}
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="sm:size-auto sm:px-4"
-            onClick={() => exportDashboardXlsx()}
-            disabled={isLoading || projects.length === 0}
-            aria-label="Xuất Excel"
-            title="Xuất Excel"
-          >
-            <FileDown className="w-4 h-4" />
-            <span className="hidden sm:inline ml-2">Xuất Excel</span>
-          </Button>
 
           <Button
-            variant="construction"
-            className="sm:px-4"
-            onClick={handleCreateProject}
-            aria-label="Dự Án Mới"
-            title="Dự Án Mới"
+            variant="outline"
+            size="lg"
+            onClick={() => exportDashboardXlsx()}
           >
+            <FileDown className="w-4 h-4 mr-2" />
+            Xuất Excel
+          </Button>
+
+          <Button variant="construction" className="sm:px-4" onClick={handleCreateProject}>
             <Plus className="w-4 h-4" />
+            {/* Hiện chữ trên desktop */}
             <span className="hidden sm:inline ml-2">Dự Án Mới</span>
             {/* Hiện chữ trên mobile */}
             <span className="sm:hidden ml-2">Tạo dự án mới</span>
           </Button>
+
         </div>
       </div>
 

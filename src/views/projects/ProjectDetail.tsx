@@ -198,7 +198,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
           {onEdit && (
             <Button variant="outline" onClick={() => onEdit(project)}>
               <Edit className="w-4 h-4 mr-2" />
-              <span className="hidden xs:inline">Chỉnh Sửa</span>
+              <span className=" xs:inline">Chỉnh Sửa</span>
             </Button>
           )}
           {onCopy && (
@@ -207,14 +207,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
               <span className="hidden xs:inline">Sao Chép</span>
             </Button>
           )}
-          <Button variant="outline" size="icon" aria-label="Thêm tuỳ chọn">
-            <MoreHorizontal className="w-4 h-4" />
-          </Button>
-          {onClose && (
-            <Button variant="ghost" onClick={onClose}>
-              Đóng
-            </Button>
-          )}
+
         </div>
       </div>
 

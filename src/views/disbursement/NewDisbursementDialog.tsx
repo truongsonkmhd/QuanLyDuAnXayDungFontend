@@ -137,8 +137,10 @@ export function NewDisbursementDialog({ isOnlyProject, project }: NewDisbursemen
                         Xuất Excel
                     </Button>
                     <DialogTrigger asChild>
-                        <Button className="rounded-2xl"><Plus className="w-4 h-4 mr-1" />Thêm giải ngân</Button>
 
+                        <Button variant="construction" className="sm:px-4" >
+                            <Plus className="w-4 h-4 mr-1" />Thêm giải ngân
+                        </Button>
                     </DialogTrigger>
 
                 </div>
