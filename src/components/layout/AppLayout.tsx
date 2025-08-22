@@ -38,7 +38,7 @@ export function AppLayout() {
 }
 
 function UserMenu() {
- const { user, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [openProfile, setOpenProfile] = useState(false);
 
@@ -79,7 +79,7 @@ function UserMenu() {
               </div>
             )}
             {/* Tên */}
-            <span className="text-sm font-medium">{displayName}</span>
+            <span className="hidden sm:inline text-sm font-medium">{displayName}</span>
           </button>
         </DropdownMenuTrigger>
 

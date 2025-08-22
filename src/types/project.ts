@@ -115,7 +115,6 @@ export interface ProjectTask {
   legalBasis?: string
 }
 
-
 export interface BaseDocument {
   id: string
   name: string

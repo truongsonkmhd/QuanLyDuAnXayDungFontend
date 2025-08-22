@@ -29,7 +29,7 @@ export function PlanCard({
   const totalPlan = plan.items.reduce((s, i) => s + i.plannedAmount, 0);
   const totalActual = plan.items.reduce((s, i) => s + (actualByPeriod[i.period] || 0), 0);
   const pctTotal = totalPlan ? Math.round((totalActual / totalPlan) * 100) : 0;
-
+  const statCols = isTask && budget !== undefined ? "sm:grid-cols-4" : "sm:grid-cols-3";
   function addRow() {
     const existing = new Set(plan.items.map(i => i.period));
 
@@ -63,51 +63,83 @@ export function PlanCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Kế hoạch giải ngân theo tháng</CardTitle>
+        <CardTitle className="text-lg sm:text-xl">Kế hoạch giải ngân theo tháng</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="flex items-center justify-between">
-          <Button size="sm" onClick={addRow}><Plus className="w-4 h-4 mr-1" />Thêm kế hoạch</Button>
+          <Button size="sm" className="w-full sm:w-auto" onClick={addRow}>
+            <Plus className="w-4 h-4 mr-1" />Thêm kế hoạch
+          </Button>
         </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Tháng</TableHead>
-              <TableHead className="text-right">Kế hoạch</TableHead>
-              <TableHead className="text-right">Thực hiện (VNĐ)</TableHead>
-              <TableHead className="text-right">(%) Hoàn thiện so kế hoạch</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {plan.items.map((it, idx) => {
-              const act = actualByPeriod[it.period] || 0;
-              const pct = it.plannedAmount ? Math.min(100, Math.round(act / it.plannedAmount * 100)) : 0;
-              return (
-                <TableRow key={it.id}>
-                  <TableCell className="flex items-center gap-2"><Calendar className="w-4 h-4" />{it.period}
-                    <Input className="ml-3 w-36" value={it.period} onChange={e => update(idx, { period: e.target.value })} />
-                  </TableCell>
-                  <TableCell className="text-right"><Input className="w-44 ml-auto text-right" type="number" value={it.plannedAmount} onChange={e => update(idx, { plannedAmount: Number(e.target.value) || 0 })} /></TableCell>
-                  <TableCell className="text-right">{formatMoney(act)} VNĐ</TableCell>
-                  <TableCell className="text-right w-56">
-                    <div className="flex flex-col gap-1">
-                      <Progress value={pct} />
-                      <div className="text-xs text-muted-foreground text-right">{pct}%</div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-right"><Button variant="ghost" size="icon" onClick={() => remove(idx)}><Trash2 className="w-4 h-4" /></Button></TableCell>
+
+
+        {/* Bảng có thể cuộn ngang trên mobile */}
+        <div className="overflow-x-auto">
+          <Table className="min-w-[700px] sm:min-w-0">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Tháng</TableHead>
+                <TableHead className="text-right">Kế hoạch</TableHead>
+                <TableHead className="text-right">Thực hiện (VNĐ)</TableHead>
+                <TableHead className="text-right">(%) Hoàn thiện so KH</TableHead>
+                <TableHead></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {plan.items.map((it, idx) => {
+                const act = actualByPeriod[it.period] || 0;
+                const pct = it.plannedAmount ? Math.min(100, Math.round((act / it.plannedAmount) * 100)) : 0;
+                return (
+                  <TableRow key={it.id}>
+                    <TableCell>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <div className="flex items-center gap-2 text-sm sm:text-base">
+                          <Calendar className="w-4 h-4" />
+                          {it.period}
+                        </div>
+                        <Input
+                          className="w-28 sm:w-36"
+                          value={it.period}
+                          onChange={e => update(idx, { period: e.target.value })}
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Input
+                        className="w-32 sm:w-44 ml-auto text-right"
+                        type="number"
+                        value={it.plannedAmount}
+                        onChange={e => update(idx, { plannedAmount: Number(e.target.value) || 0 })}
+                      />
+                    </TableCell>
+                    <TableCell className="text-right">{formatMoney(act)} VNĐ</TableCell>
+                    <TableCell className="text-right w-40 sm:w-56">
+                      <div className="flex flex-col gap-1">
+                        <Progress value={pct} />
+                        <div className="text-[11px] sm:text-xs text-muted-foreground text-right">{pct}%</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="icon" aria-label="Xóa dòng" onClick={() => remove(idx)}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+              {plan.items.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center text-muted-foreground">Chưa có dòng kế hoạch.</TableCell>
                 </TableRow>
-              );
-            })}
-            {plan.items.length === 0 && (
-              <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground">Chưa có dòng kế hoạch.</TableCell></TableRow>
-            )}
-          </TableBody>
-        </Table>
-        <div className={`grid gap-4 ${isTask && budget !== undefined ? "grid-cols-4" : "grid-cols-3"}`}>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
+
+        <div className={`grid grid-cols-1 ${statCols} gap-3 sm:gap-4`}>
           {isTask && budget !== undefined && (
-            <Stat label="Ngân sách ban đầu " value={`${formatMoney(budget)} VNĐ`} muted={true} />
+            <Stat label="Ngân sách ban đầu " value={`${formatMoney(budget)} VNĐ`} muted />
           )}
           <Stat label="Tổng kế hoạch" value={`${formatMoney(totalPlan)} VNĐ`} />
           <Stat label="Tổng thực hiện " value={`${formatMoney(totalActual)} VNĐ`} />

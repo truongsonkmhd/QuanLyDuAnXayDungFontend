@@ -10,7 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore"
 import { db } from "./FirebaseConfig.ts";
-import { milestone, Project, ProjectTemplate } from "@/types/project"  // Đảm bảo đã định nghĩa các kiểu này
+import { milestone, Project, ProjectTask, ProjectTemplate } from "@/types/project"  // Đảm bảo đã định nghĩa các kiểu này
 
 // Collections
 const projectCollection = collection(db, "projects")
@@ -61,8 +61,6 @@ export const updateMilestone = async (projectId: string, updatedMilestone: miles
 
   await updateDoc(projectDoc, { milestones: newMilestones })
 }
-
-
 
 // Lấy toàn bộ dự án
 export const getAllProjects = async (): Promise<Project[]> => {

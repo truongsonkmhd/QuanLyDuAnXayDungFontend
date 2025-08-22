@@ -18,12 +18,11 @@ import {
   AlertTriangle,
   FileText,
   User,
-  Plus
 } from "lucide-react";
 import { Project } from "@/types/project";
 import { ProjectPhaseCard } from "./ProjectPhaseCard";
 import { ProjectTaskList } from "./ProjectTaskList";
-import { DisbursementPlanOnlyProject, DisbursementRequest } from "@/types/disbursement";
+import { DisbursementPlanOnlyProject } from "@/types/disbursement";
 import { calcDisbursement } from "@/utils/calcDisbursement";
 import { formatMoney } from "@/utils/formatMoney";
 import { NewDisbursementDialog } from "../disbursement/NewDisbursementDialog";
@@ -80,7 +79,6 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
   } = useDisbursementPlanOnlyProject();
   const {
     projects,
-    getById,
     isLoading: isProjectsLoading,
   } = useProjects();
 
@@ -140,7 +138,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
         { id: "pl2", period: ym(1), plannedAmount: 400_000_000 },
         { id: "pl3", period: ym(2), plannedAmount: 300_000_000 },
       ],
-    } satisfies DisbursementPlanOnlyProject;
+    } as DisbursementPlanOnlyProject;
   }, [filteredPlans, project.id, requestPeriods]);
 
   const formatDate = (dateString: string) => {
@@ -183,32 +181,33 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between">
-        <div className="space-y-2">
+      {/* Header: stack trên mobile, hàng ngang từ sm */}
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+        <div className="space-y-2 sm:max-w-3xl">
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold text-foreground">{project.name}</h1>
+            <h1 className="text-3xl font-bold text-foreground break-words">{project.name}</h1>
             <Badge className={status.className}>
               <StatusIcon className="w-3 h-3 mr-1" />
               {status.label}
             </Badge>
           </div>
-          <p className="text-muted-foreground max-w-2xl">{project.description}</p>
+          <p className="text-muted-foreground">{project.description}</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {onEdit && (
             <Button variant="outline" onClick={() => onEdit(project)}>
               <Edit className="w-4 h-4 mr-2" />
-              Chỉnh Sửa
+              <span className="hidden xs:inline">Chỉnh Sửa</span>
             </Button>
           )}
           {onCopy && (
             <Button variant="outline" onClick={() => onCopy(project)}>
               <Copy className="w-4 h-4 mr-2" />
-              Sao Chép
+              <span className="hidden xs:inline">Sao Chép</span>
             </Button>
           )}
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" aria-label="Thêm tuỳ chọn">
             <MoreHorizontal className="w-4 h-4" />
           </Button>
           {onClose && (
@@ -219,6 +218,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
         </div>
       </div>
 
+      {/* Stats grid đã OK cho mobile */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4">
@@ -277,13 +277,19 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
         </Card>
       </div>
 
+      {/* Tabs: cuộn ngang trên mobile, 1 hàng cố định từ sm */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="overview">Tổng Quan</TabsTrigger>
-          <TabsTrigger value="phases">Giai Đoạn</TabsTrigger>
-          <TabsTrigger value="tasks">Công Việc</TabsTrigger>
-          <TabsTrigger value="documents">Tài Liệu</TabsTrigger>
-          <TabsTrigger value="disbursement">Giải Ngân</TabsTrigger>
+        <TabsList
+          className="
+            flex w-full flex-nowrap overflow-x-auto gap-2 p-1
+            sm:grid sm:grid-cols-5 sm:gap-0 sm:p-1
+          "
+        >
+          <TabsTrigger className="shrink-0" value="overview">Tổng Quan</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="phases">Giai Đoạn</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="tasks">Công Việc</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="documents">Tài Liệu</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="disbursement">Giải Ngân</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -294,7 +300,8 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
                   <CardTitle>Thông Tin Dự Án</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* 1 cột trên mobile, 2 cột từ sm */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-muted-foreground">Ngày Bắt Đầu</p>
                       <p className="font-medium">{formatDate(project.startDate)}</p>
@@ -307,14 +314,14 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
                       <p className="text-sm text-muted-foreground">Quản Lý Dự Án</p>
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4" />
-                        <p className="font-medium">{project.manager}</p>
+                        <p className="font-medium break-words">{project.manager}</p>
                       </div>
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Địa Điểm</p>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <p className="font-medium">{project.location || "Chưa xác định"}</p>
+                        <p className="font-medium break-words">{project.location || "Chưa xác định"}</p>
                       </div>
                     </div>
                   </div>
@@ -338,7 +345,6 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
                       <span>Tiến Độ Tổng Thể</span>
                       <span className="font-medium">{project.progress}%</span>
                     </div>
-
                     <Progress value={project.progress} className="h-3" />
                   </div>
 
@@ -413,7 +419,10 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
         </TabsContent>
 
         <TabsContent value="tasks" className="space-y-4">
-          <ProjectTaskList tasks={project.tasks || []} />
+          {/* nếu list bên trong có bảng, bọc overflow-x-auto */}
+          <div className="overflow-x-auto">
+            <ProjectTaskList tasks={project.tasks || []} />
+          </div>
         </TabsContent>
 
         <TabsContent value="documents" className="space-y-4">
@@ -477,13 +486,16 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
                       <CardHeader>
                         <CardTitle className="text-xl">Đề Nghị Giải Ngân</CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-4">
+                      {/* Bọc bảng để kéo ngang trên mobile */}
+                      <CardContent className="space-y-4 overflow-x-auto">
                         <NewDisbursementDialog isOnlyProject={true} project={project} />
-                        <ListTable
-                          rows={filteredRequests}
-                          onUpdate={(r) => updateRequest(r.id, r)}
-                          onDelete={(id) => removeRequest(id)}
-                        />
+                        <div className="min-w-[720px] sm:min-w-0">
+                          <ListTable
+                            rows={filteredRequests}
+                            onUpdate={(r) => updateRequest(r.id, r)}
+                            onDelete={(id) => removeRequest(id)}
+                          />
+                        </div>
                       </CardContent>
                     </Card>
                   </TabsContent>

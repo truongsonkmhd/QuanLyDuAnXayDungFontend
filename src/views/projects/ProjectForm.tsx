@@ -506,14 +506,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                 <div className="ml-6 space-y-2">
                   {folder.files.map(file => (
                     <div key={file.id} className="flex items-center gap-2">
-                      <a
-                        href={getDownloadUrl(file.url, file.name)}
-                        download={file.name}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-
+                      <a href={getDownloadUrl(file.url, file.name)} download={file.name} target="_blank" rel="noopener noreferrer">
                         {file.name}
                       </a>
                       <Button
@@ -556,14 +549,14 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-xl sm:text-2xl font-bold">
             {mode === 'create' && 'Tạo Dự Án Mới'}
             {mode === 'edit' && 'Chỉnh Sửa Dự Án'}
             {mode === 'copy' && 'Sao Chép Dự Án'}
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             {mode === 'create' && 'Tạo một dự án mới từ template hoặc tùy chỉnh'}
             {mode === 'edit' && 'Cập nhật thông tin dự án'}
             {mode === 'copy' && 'Tạo bản sao của dự án hiện có'}
@@ -582,12 +575,13 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="template">Template</TabsTrigger>
-          <TabsTrigger value="basic">Thông Tin Cơ Bản</TabsTrigger>
-          <TabsTrigger value="phases">Giai Đoạn</TabsTrigger>
-          <TabsTrigger value="settings">Cài Đặt</TabsTrigger>
-          <TabsTrigger value="documentation">Tài liệu dự án</TabsTrigger>
+        <TabsList
+          className=" flex w-full flex-nowrap overflow-x-auto gap-2 p-1 sm:grid sm:grid-cols-5 sm:gap-0 sm:p-1"
+        >        <TabsTrigger className="shrink-0" value="template">Template</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="basic">Thông Tin Cơ Bản</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="phases">Giai Đoạn</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="settings">Cài Đặt</TabsTrigger>
+          <TabsTrigger className="shrink-0" value="documentation">Tài liệu dự án</TabsTrigger>
         </TabsList>
 
         <TabsContent value="template" className="space-y-4">
@@ -1223,8 +1217,8 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                   </span>
                 </Label>
                 <Select
-                  value={newTask.assignUser || ""}
-                  onValueChange={(v) =>
+                  value={newTask.assignUser || ""}                              // ✅ binding giá trị
+                  onValueChange={(v) =>                                          // ✅ cập nhật state
                     setNewTask((prev) => ({ ...prev, assignUser: v, assignee: v }))
                   }
                 >

@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
-import { Plus, Trash2, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, CheckCircle2, FileDown } from "lucide-react";
 import { format } from "date-fns";
 import { DisbursementItem, DisbursementRequest } from "@/types/disbursement";
 import { calcDisbursement } from "@/utils/calcDisbursement";
@@ -16,6 +16,7 @@ import { useProjects } from "@/hooks/project/useProjects";
 import { useDisbursementRequests } from "@/hooks/disbursement/useDisbursementRequests";
 import { milestone, Project } from "@/types/project";
 import { useMilestones } from "@/hooks/project/useMilestones";
+import { saveAs } from "file-saver";
 
 function newItem(): DisbursementItem {
     return { id: Math.random().toString(36).slice(2), description: "", amount: 0, taxRate: 8 };
@@ -41,6 +42,11 @@ export function NewDisbursementDialog({ isOnlyProject, project }: NewDisbursemen
     const { projects, getById } = useProjects();
     const [projectId, setProjectId] = useState<string>(isOnlyProject && project ? project.id : projects[0]?.id ?? "");
     const { milestones, loading: milestonesLoading, addMilestone, deleteMilestone } = useMilestones(projectId);
+
+    const exportDashboardXlsx = () => {
+        const fileUrl = '/disbursement_Report_Template.xlsx';
+        saveAs(fileUrl, 'disbursement_Report_Template.xlsx');
+    };
 
     const totals = useMemo(() => {
         const base = calcDisbursement(items, advance);
@@ -121,9 +127,22 @@ export function NewDisbursementDialog({ isOnlyProject, project }: NewDisbursemen
     function renderDialog() {
         return (
             <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) reset(); }}>
-                <DialogTrigger asChild>
-                    <Button className="rounded-2xl"><Plus className="w-4 h-4 mr-1" />Thêm giải ngân</Button>
-                </DialogTrigger>
+                <div className="flex items-center gap-2">
+                    <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={() => exportDashboardXlsx()}
+                    >
+                        <FileDown className="w-4 h-4 mr-2" />
+                        Xuất Excel
+                    </Button>
+                    <DialogTrigger asChild>
+                        <Button className="rounded-2xl"><Plus className="w-4 h-4 mr-1" />Thêm giải ngân</Button>
+
+                    </DialogTrigger>
+
+                </div>
+
                 <DialogContent className="sm:max-w-3xl">
                     <DialogHeader>
                         <DialogTitle>Tạo Đề Nghị Giải Ngân</DialogTitle>
