@@ -557,7 +557,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
             {mode === 'copy' && 'Sao Chép Dự Án'}
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground">
-            {mode === 'create' && 'Tạo một dự án mới từ template hoặc tùy chỉnh'}
+            {mode === 'create' && 'Tạo một dự án mới từ bản mẫu hoặc tùy chỉnh'}
             {mode === 'edit' && 'Cập nhật thông tin dự án'}
             {mode === 'copy' && 'Tạo bản sao của dự án hiện có'}
           </p>
@@ -577,7 +577,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList
           className=" flex w-full flex-nowrap overflow-x-auto gap-2 p-1 sm:grid sm:grid-cols-5 sm:gap-0 sm:p-1"
-        >        <TabsTrigger className="shrink-0" value="template">Template</TabsTrigger>
+        >        <TabsTrigger className="shrink-0" value="template">Bản Mẫu</TabsTrigger>
           <TabsTrigger className="shrink-0" value="basic">Thông Tin Cơ Bản</TabsTrigger>
           <TabsTrigger className="shrink-0" value="phases">Giai Đoạn</TabsTrigger>
           <TabsTrigger className="shrink-0" value="settings">Cài Đặt</TabsTrigger>
@@ -589,13 +589,13 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                Chọn Template Dự Án
+                Chọn Bản Mẫu Dự Án
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4">
                 {loading ? (
-                  <p>Đang tải template...</p>
+                  <p>Đang tải Bản Mẫu...</p>
                 ) : (
                   projectTemplates.map((template) => (
                     <Card
@@ -1683,7 +1683,7 @@ export function ProjectForm({ project, onSave, onCancel, mode }: ProjectFormProp
                     onClick={() => setActiveTab("template")}
                   >
                     <Plus className="w-4 h-4 mr-2" />
-                    Chọn Template
+                    Chọn Bản Mẫu
                   </Button>
                 </div>
               )}

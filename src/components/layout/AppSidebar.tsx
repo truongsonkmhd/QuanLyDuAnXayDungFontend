@@ -1,10 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom"
-import { 
-  Building, 
-  FolderKanban, 
-  CalendarDays, 
-  FileText, 
-  MessageSquare, 
+import {
+  Building,
+  FolderKanban,
+  CalendarDays,
+  FileText,
+  MessageSquare,
   Settings,
   BarChart3,
   Users,
@@ -30,14 +30,14 @@ const navigationItems = [
   { title: "Dự Án", url: "/projects", icon: Building },
   { title: "Công Việc", url: "/tasks", icon: FolderKanban },
   { title: "Tiến Độ", url: "/timeline", icon: CalendarDays },
-  { title: "Giải Ngân", url: "/disbursement", icon: DollarSign  },
+  { title: "Giải Ngân", url: "/disbursement", icon: DollarSign },
   { title: "Tài Liệu", url: "/documents", icon: FileText },
   { title: "Nhóm", url: "/team", icon: Users },
   { title: "Thảo Luận", url: "/discussions", icon: MessageSquare },
 ]
 
 const toolsItems = [
-  { title: "Mẫu", url: "/templates", icon: HardHat },
+  { title: "Tạo Bản Mẫu", url: "/templates", icon: HardHat },
   { title: "Báo Cáo", url: "/reports", icon: FileText },
   { title: "Công Cụ", url: "/tools", icon: Wrench },
   { title: "Cài Đặt", url: "/settings", icon: Settings },
@@ -52,8 +52,8 @@ export function AppSidebar() {
   const isActive = (path: string) => currentPath === path
 
   const getNavClassName = (path: string) =>
-    isActive(path) 
-      ? "bg-primary text-primary-foreground font-medium shadow-construction" 
+    isActive(path)
+      ? "bg-primary text-primary-foreground font-medium shadow-construction"
       : "hover:bg-muted transition-colors"
 
   return (

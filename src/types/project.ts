@@ -85,6 +85,11 @@ export interface DocumentFolder {
   files: BaseDocument[]
 }
 
+export interface ProjectPhaseTemplate {
+  id: string
+  projectPhase: ProjectPhase[]
+}
+
 export interface ProjectPhase {
   id: string
   name: string
