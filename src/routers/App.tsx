@@ -14,7 +14,7 @@ import Disbursement from "@/views/pages/DisbursementPage";
 import Discuss from "@/views/pages/DiscussPage";
 import GroupsPage from "@/views/pages/GroupsPage";
 import DocumentsPage from "@/views/pages/DocumentsPage";
-
+import ProjectPhaseTemplatesPage from "@/views/pages/ProjectPhaseTemplatesPage";
 
 const queryClient = new QueryClient();
 
