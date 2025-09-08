@@ -80,6 +80,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
   const {
     projects,
     isLoading: isProjectsLoading,
+    getById,
   } = useProjects();
 
   const filteredRequests = useMemo(() => {

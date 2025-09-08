@@ -36,10 +36,12 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/timeline" element={<div>(Sắp Ra Mắt)</div>} />
           <Route path="/disbursement" element={<Disbursement />} />
-          <Route path="/documents" element={<div>Trang Tài Liệu (Sắp Ra Mắt)</div>} />
-          <Route path="/team" element={<div>Trang Nhóm (Sắp Ra Mắt)</div>} />
-          <Route path="/discussions" element={<div>Trang Thảo Luận (Sắp Ra Mắt)</div>} />
+
+          <Route path="/documents" element={<DocumentsPage/>} />
+          <Route path="/team" element={<GroupsPage />} />
+          <Route path="/discussions" element={<Discuss/>} />
           <Route path="/templates" element={<ProjectPhaseTemplatesPage />} />
+
           <Route path="/reports" element={<div>Trang Báo Cáo (Sắp Ra Mắt)</div>} />
           <Route path="/tools" element={<div>Trang Công Cụ (Sắp Ra Mắt)</div>} />
           <Route path="/settings" element={<div>Trang Cài Đặt (Sắp Ra Mắt)</div>} />

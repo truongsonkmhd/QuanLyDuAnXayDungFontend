@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react";
-import { useChannels, Channel } from "@/hooks/discuss/useChanels"; // 👈 import Channel chuẩn
+import { useChannels, Channel } from "@/hooks/discuss/useChannels"; // 👈 import Channel chuẩn
 import DiscussForm from "../discuss/discussForm";
 import ChannelChat from "../discuss/channelChat"; 
 
