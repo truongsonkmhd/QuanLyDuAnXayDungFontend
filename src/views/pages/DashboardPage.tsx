@@ -245,7 +245,7 @@ export default function Dashboard() {
               <div className="space-y-2">
                 <div className="text-sm">
                   <span className="font-medium">Nguyễn Thị Minh</span> đã cập nhật tiến độ công việc
-                  <div className="text-muted-foreground text-xs">2 giờ trước</div>
+                  <div className="text-muted-foreground text-xs">23 giờ trước</div>
                 </div>
                 <div className="text-sm">
                   <span className="font-medium">Trần Văn Hòa</span> đã tải lên tài liệu mới

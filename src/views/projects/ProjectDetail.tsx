@@ -81,7 +81,7 @@ export function ProjectDetail({ project, onEdit, onCopy, onClose }: ProjectDetai
   const {
     projects,
     getById,
-    isLoading: isProjectsLoading,
+    loading: isProjectsLoading,
   } = useProjects();
 
   const filteredRequests = useMemo(() => {
