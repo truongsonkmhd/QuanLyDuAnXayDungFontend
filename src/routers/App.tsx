@@ -11,6 +11,10 @@ import Tasks from "../views/pages/TasksPage";
 import NotFound from "../views/pages/NotFound";
 import AuthScreen from "@/views/login-and-registor/AuthScreen";
 import Disbursement from "@/views/pages/DisbursementPage";
+import Discuss from "@/views/pages/DiscussPage";
+import GroupsPage from "@/views/pages/GroupsPage";
+import DocumentsPage from "@/views/pages/DocumentsPage";
+
 
 const queryClient = new QueryClient();
 
@@ -25,7 +29,7 @@ const App = () => (
         <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route path="/auth" element={<AuthScreen />} />
 
-        {/* các trang sau đăng nhập dùng layout chung */}
+      {/* các trang sau đăng nhập dùng layout chung */}
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
@@ -35,7 +39,7 @@ const App = () => (
           <Route path="/documents" element={<div>Trang Tài Liệu (Sắp Ra Mắt)</div>} />
           <Route path="/team" element={<div>Trang Nhóm (Sắp Ra Mắt)</div>} />
           <Route path="/discussions" element={<div>Trang Thảo Luận (Sắp Ra Mắt)</div>} />
-          <Route path="/templates" element={<div>Trang Mẫu (Sắp Ra Mắt)</div>} />
+          <Route path="/templates" element={<ProjectPhaseTemplatesPage />} />
           <Route path="/reports" element={<div>Trang Báo Cáo (Sắp Ra Mắt)</div>} />
           <Route path="/tools" element={<div>Trang Công Cụ (Sắp Ra Mắt)</div>} />
           <Route path="/settings" element={<div>Trang Cài Đặt (Sắp Ra Mắt)</div>} />
